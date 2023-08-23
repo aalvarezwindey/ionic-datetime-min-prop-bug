@@ -1,7 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import { IonApp, IonButton, IonDatetime, setupIonicReact } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -21,22 +18,40 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { useState } from 'react';
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const minDate = '2023-08-22T00:00:00';
+const App: React.FC = () => {
+
+  const [min, setMin] = useState<string | undefined>(minDate);
+  
+  return (
   <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
+    <IonButton
+      onClick={() => {
+        if (min) {
+          setMin(undefined);
+        } else {
+          setMin(minDate);
+        }
+      }}
+    >
+      Toggle Min
+    </IonButton>
+    <IonDatetime
+      min={min}
+      onIonChange={({ detail }) => {
+        console.log(detail.value as string);
+      }}
+      minuteValues="0,15,30,45"
+      presentation="time"
+      locale="en-US"
+      hourCycle="h12"
+      preferWheel
+    />
   </IonApp>
-);
+)};
 
 export default App;
