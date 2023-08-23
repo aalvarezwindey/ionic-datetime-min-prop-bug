@@ -1,0 +1,7 @@
+{
+  "name": "ionic-datetime-min-prop-bug",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
